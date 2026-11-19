@@ -8,6 +8,7 @@ public class Address {
     private final String street;
     private final String house;
     private final int floor;
+    private final int hash;
 
     public Address(String city, String street, String house, int floor) {
         if (city == null || city.isBlank()) {
@@ -26,6 +27,8 @@ public class Address {
         this.street = street;
         this.house = house;
         this.floor = floor;
+        // Хеш считается один раз: при подсчёте дублей HashMap запрашивает его для каждой из миллионов записей
+        this.hash = Objects.hash(city, street, house, floor);
     }
 
     public String getCity() {
@@ -62,7 +65,7 @@ public class Address {
 
     @Override
     public int hashCode() {
-        return Objects.hash(city, street, house, floor);
+        return hash;
     }
 
     @Override
